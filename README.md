@@ -10,7 +10,7 @@ A collection of cisco ios commands from ccna1-4.
 - [ ] Add spanning-tree
 - [ ] Add etherchannel
 - [ ] Add PortFast and BPDU guard
-
+- [ ] Add subnetting "help"
 
 
 > The spelling of cisci is done intentionally.
