@@ -18,6 +18,9 @@
 \textrm{Identify the outside interface.}\\
 (config)\# \textbf{interface} \textit{interface\_id}\\
 (config-if)\# \textbf{ip nat outside}
+\subsubsection*{Static NAT with TCP port specified}
+\textrm{\textbf{Use a static NAT statement to redirect TCP port 80 traffic from 64.102.139.2(inside global) to 10.10.10.10(inside local):}}\\
+(config)\# ip nat inside source static tcp 10.10.10.10 80 \\64.102.139.2 80
 \subsection{PAT - Port Address Translation}
 \subsubsection*{Configure PAT for a sinlge public IPv4 address}
 \textrm{Define a standard access list permitting the addresses that should be translated.}\\

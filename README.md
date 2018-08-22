@@ -6,7 +6,7 @@ A collection of cisco ios commands from ccna1-4.
 
 - [ ] Make commands look uniform
 - [ ] OSPFv3
-- [ ] Make som changes to static nat, include something about udp/tcp
+- [x] Make som changes to static nat, include something about udp/tcp
 - [ ] Add spanning-tree
 - [ ] Add etherchannel
 - [ ] Add PortFast and BPDU guard
