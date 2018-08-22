@@ -1,0 +1,10 @@
+\section{GRE - Generic Routing Encapsulation}
+(config)\# \textbf{interface tunnel} \textit{tunnel\_id\_number}\\
+(config-if)\# \textbf{tunnel source} \textit{ip\_address}\\
+(config-if)\# \textbf{tunnel destination} \textit{ip\_address}\\
+(config-if)\# \textbf{ip address} \textit{ip\_address mask}\footnote{Specifies the IP address of the tunnel interface.}\\
+{[}(config-if)\# \textbf{tunnel mode gre ip}]
+\subsection{Troubleshooting}
+show ip interface brief | include Tunnel\\
+show interface tunnel \textit{tunnel\_id\_number}\\
+show ip ospf neighbor

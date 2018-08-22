@@ -1,0 +1,57 @@
+\section{Single Area OSPF}
+\subsection{IPv4}
+\subsubsection*{Enter and enable OSPF with}
+(config)\# \textbf{router ospf} \textit{process\_id}\vspace{4pt}\\
+\textrm{The \texttt{\textit{process-id}} value represents a number between 1 and 65,535 and is selected by the network administrator. The \texttt{\textit{process-id}} value is locally significant, which means that it does not have to be the same value on the other OSPF routers to establish adjacencies with those neighbors.}
+\subsubsection*{Give the router an ID}
+(config-router)\# \textbf{router-id} \textit{rid}\vspace{4pt}\\
+\textrm{The rid value is any 32-bit value expressed as an IPv4 address, e.g.} (config-router)\# router-id 1.1.1.1
+\subsubsection*{If the router already has a name, you might have to clear the OSPF process before you can change it}
+(config-router)\# router-id 1.1.1.1\vspace{11pt}\\
+\%\%\% Some error message\vspace{11pt}\\
+\# clear ip ospf process\\
+\textrm{Press \texttt{y} to the prompt}\vspace{11pt}\\
+show ip protocols | section Router ID -> to see the change
+
+\subsubsection*{Using a Loopback Interface as the Router ID}
+(config)\# interface loopback 0\\
+(config-if)\# ip address 1.1.1.1 255.255.255.255\\
+(config-if)\# end\\
+\textrm{The IPv4 address of the loopback interface should be configured using a 32-bit subnet mask (255.255.255.255). This effectively creates a host route. A 32-bit host route does not get advertised as a route to other OSPF routers. 
+The example displays how to configure a loopback interface with a host route on R1. R1 uses the host route as its router ID, assuming there is no router ID explicitly configured or previously learned.
+}
+\subsubsection*{Enabling OSPF on interfaces}
+\textrm{The \texttt{network} command determines which interfaces participate in the routing process for an OSPF area. Any interfaces on the router that match the network address in the \texttt{network} command are enabled to send and receive OSPF packets. As a result, the network (or subnet) addresses for the interface is included in OSPF routing updates. The basic command syntax is}\vspace{8pt}\\
+(config-router)\#\textbf{network} \textit{network\_address wildcard\_mask} \textbf{area} \textit{area\_id}\vspace{11pt}\\
+\textrm{The \texttt{\textbf{area} \textit{area\_id}} syntax refers to the OSPF area. When configuring single-area OSPF, the \texttt{\textbf{network}} command must be configured with the same \texttt{area\_id} value on all routers. Although any area ID can be used, it is good practice to use an area ID of 0 with single-area OSPF. This convention makes it easier if the network is later altered to support multiarea OSPF.}\vspace{8pt}\\
+(config)\# router ospf 10\\
+(config-router)\# network 172.16.1.0 0.0.0.255 area 0\\
+(config-router)\# network 172.16.3.0 0.0.0.3 area 0\\
+(config-router)\# network 192.168.10.4 0.0.0.3 area 0\vspace{11pt}\\
+\textrm{As an alternative, OSPFv2 can be enabled using the \texttt{\textbf{network} \textit{int\_ip\_address} \\\textbf{0.0.0.0} \textbf{area} \textit{area\_id}} router configuration mode command.\\
+Below you can see an example of specifying the interface IPv4 address with a quad 0 wildcard mask. Entering \texttt{network 172.16.3.1 0.0.0.0 area 0} on R1 tells the router to enable interface Serial0/0/0 for the routing process. As a result, the OSPFv2 process will advertise the network that is on this interface (172.16.3.0/30).\\
+The advantage of specifying the interface is that the wildcard mask calculation is not necessary. OSPFv2 uses the interface address and subnet mask to determine the network to advertise.\\
+\textbf{Note:} This method is not really used by Cisco.}\vspace{8pt}\\
+(config)\# router ospf 10\\
+(config-router)\# network 172.16.1.1 0.0.0.0 area 0\\
+(config-router)\# network 172.16.3.1 0.0.0.0 area 0\\
+(config-router)\# network 192.168.10.5 0.0.0.0 area 0
+\subsubsection*{Propagate the default route}
+(config-router)\# \textbf{default-information originate}
+\subsubsection*{Passive Interface}
+(config-router)\#\textbf{ passive-interface} \textit{interface\_id}
+\subsubsection*{Adjusting the interface bandwidth}
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{bandwidth} \textit{kilobits}
+\subsubsection*{Manually setting the OSPF cost}
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip ospf cost} \textit{value}
+\subsubsection*{Some show commands}
+show ip ospf neighbor\\
+show ip protocols\\
+show ip ospf\\
+show ip ospf interface\\
+show ip ospf interface brief\\
+show ip ospf interface serial 0/0/1
+
+\subsection{IPv6}

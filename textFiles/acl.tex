@@ -1,0 +1,58 @@
+\section{ACL - Access Control Lists}
+\subsection{Standard ACL}
+\textrm{Matches based only on source address.\\
+Place them as close the destination as possible.\\
+The full syntax of the standard ACL command is as follows:}\vspace{2pt}\\
+(config)\# \textbf{access-list} \textit{access\_list\_number} \{\textbf{deny} | \textbf{permit} | \textbf{remark}\}\\\textit{source} [\textit{source-wildcard}] [\textbf{log}]\vspace{11pt}\\
+\textrm
+{\tabulinesep=1mm
+\parindent0pt
+\begin{tabu}{ | l | X | }
+	\multicolumn{1}{l|}{\cellcolor{cyan}Parameter} & \multicolumn{1}{l}{\cellcolor{cyan}Description}\\\hline
+	\texttt{\textit{access\_list\_number}} & Number of an ACL. This is a decimal number from 1 to 99 or 1300 to 1999 (for standard ACL).\\\hline
+	\texttt{\textbf{deny}} & Denies access if the condition are matched.\\\hline
+	\texttt{\textbf{permit}} & Permits access id the conditions are matched.\\\hline
+	\texttt{\textbf{remark}} & Add a remark about entries in an IP access list to make the list easier to understand and scan.\\\hline
+	\texttt{\textit{source}} & Number of the network or host from which the packet is being sent. There are two ways to specify the \texttt{\textit{source}}:
+			\begin{itemize}[noitemsep,topsep=0pt]
+				\item Use a 32-bit quantity in four-part, dotted-decimal format.
+				\item Use the keyword \texttt{\textbf{any}} as an abbreviation for a \texttt{\textit{source}} and \texttt{\textit{source\_wildcard}} of 0.0.0.0 255.255.255.255.
+			\end{itemize}\\\hline
+	\texttt{\textit{source\_wildcard}} & (Optional) 32-bit wildcard mask to be applied to the source. Places ones in the bit positions you want to ignore.\\\hline
+	\texttt{\textbf{log}} & (Optional) Causes an informational logging message about the packet that matches the entry to be sent to the console. (The level of messages logged to the console is controlled by the \texttt{logging console} command.)\\\hline
+\end{tabu}}\vspace{22pt}
+\noindent
+\textrm{After a standard ACL is configured, it is linked to an interface using the \texttt{ip access-group} command in interface configuration mode:}\vspace{2pt}\\
+(config-if)\# \textbf{ip access-group} \{\textit{access\_list\_number} | \textit{access\_list\_\\name}\} \{ \textbf{in} | \textbf{out} \}
+\subsubsection{Named Standard ACL}
+\textrm{Alphanumeric name string must be unique and cannot begin with a number.}\vspace{2pt}\\
+(config)\# \textbf{ip access-list} [\textbf{standard} | \textbf{extended}] \textit{name}\vspace{11pt}\\
+(config-std-nacl)\# [\textbf{permit} | \textbf{deny} | \textbf{remark}] \{\textit{source} [\textit{source\_\\wildcard}]\} [\textbf{log}]\vspace{11pt}\\
+\textrm{Activate the named IP ACL on an interface}\vspace{2pt}\\
+(config-if)\# \textbf{ip access-group} \textit{name} [\textbf{in} | \textbf{out}]
+
+\subsection{Extended ACL}
+\textrm{Matches based on source/destination address, protocol, source/destination port number.\\Apply them as close to source as possible.}\\
+(config)\# \textbf{access-list} \textit{access\_list\_number} \{\textbf{deny} | \textbf{permit} | \textbf{remark}\}\\\textit{protocol} [\textit{source source-wildcard}] [\textit{operator port} [\textit{port\_number or \\name}]] \{\textit{destination destination\_wildcard}\} [\textit{operator port} [\textit{port\_\\number or name}]]\vspace{11pt}\\
+\textrm
+{\tabulinesep=1mm
+\parindent0pt
+\begin{tabu}{ | l | X | }
+	\multicolumn{1}{l|}{\cellcolor{cyan}Parameter} & \multicolumn{1}{l}{\cellcolor{Cyan}Description}\\\hline
+	\texttt{\textit{access\_list\_number}} & Identifies the access list using a number in the range 100 to 199 (for an extended IP ACL) and 2000 to 2699 (expanded IP ACLs).\\\hline
+	\texttt{\textbf{remark}} & Used to enter a remark or comment.\\\hline
+	\texttt{\textit{protocol}} & Name or number of an Internet protocol. Common keywords include \texttt{icmp, ip, tcp} or \texttt{udp}. To match any Internet protocol (including ICMP, TCP, and UDP) use the \texttt{ip} keyword.\\\hline
+	\texttt{\textit{destination}} & Number of the network or host to which the packet is being sent\\\hline
+	\texttt{\textit{destination\_wildcard}} & Wildcard bits to be applied to the destination.\\\hline
+	\texttt{\textit{operator}} & (Optional) Compares source or destination ports. Possible operands include \texttt{lt} (less than), \texttt{gt} (greater than), \texttt{eq} (equal), \texttt{neq} (not equal), and \texttt{range} (inclusive range).\\\hline
+	\texttt{\textit{port}} & (Optional) The decimal number or name of a TCP or UDP port.\\\hline
+\end{tabu}}
+
+\subsection{ACL for IPv6}
+(config)\# \textbf{ipv6 access-list} \textit{access\_list\_name}\\
+(config-ipv6-acl)\# \textbf{deny} | \textbf{permit} \textit{protocol} \{\textit{source\_ipv6\_prefix/\\prefix\_length} | \textbf{any} | \textbf{host} \textit{source\_ipv6\_address}\} [\textit{operator} [\textit{port\_\\number}]] \{\textit{destination\_ipv6\_prefix/prefix\_legnth} | \textbf{any} | \textbf{host} \\\textit{destination\_ipv6\_address}\} [\textit{operator} [\textbf{port\_number}]]\vspace{11pt}\\
+\textrm{After an IPv6 ACL is configured, it is linked to an interface using the \texttt{ipv6 traffic-\\filter} command:}\vspace{2pt}\\
+(config-if)\# \textbf{ipv6 traffic-filter} \textit{access\_list\_name} \{\textbf{in} | \textbf{out}\}
+\subsection{Show ACL}
+show access-lists\\
+show ip access-lists

@@ -1,0 +1,41 @@
+\section{Point-to-Point Connections}
+\subsection{HDLC - High-Level Data Link Control}
+\textrm{Cisco uses HDLC as the default encapsulation method on synchronous serial lines. But if it has been changed, change it back with:}\vspace{4pt}\\
+(config-if)\# \textbf{encapsulation hdlc}
+
+\subsection{PPP - Point-to-Point Protocol}
+\subsubsection*{Enable PPP on an interface}
+(config-if)\# \textbf{encapsulation ppp}
+\subsubsection*{PAP}
+\textrm{For PAP to work, you need a user on the router}\vspace{4pt}\\
+(config)\# \textbf{username} \textit{user\_XX} \textbf{secret} \textit{passw\_XX}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\#\textbf{ ppp authentication pap}\\
+(config-if)\# \textbf{ppp pap sent-username} \textit{user\_YY} \textbf{password} \textit{passw\_YY}\vspace{11pt}\\
+\textrm{Mirror these settings at the other end of the link}\vspace{4pt}\\
+(config)\# \textbf{username} \textit{user\_YY} \textbf{secret} \textit{passw\_YY}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ppp authentication pap}\\
+(config-if)\# \textbf{ppp pap sent-username} \textit{user\_XX} \textbf{password} \textit{passw\_XX}
+\subsubsection*{CHAP}
+\textrm{The hostname on one router must match the username the other router has configured. The password on the 2 users must also match.}\vspace{4pt}\\
+(config)\# \textbf{username} \textit{username} \textbf{password} \textit{password}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ppp authentication chap}
+\subsection{Troubleshoot}
+\subsubsection*{Clock rate}
+\textrm{The DCE end has to provide the clock signal, look for it under interface serial in the running config.}\\
+\# show running-config | begin interface Serial\vspace{11pt}\\
+\textrm{If it has not been set, set it like this:}\vspace{1pt}\\
+(config-if)\# \textbf{clock rate} \textit{clock\_rate}
+\subsubsection*{Authentication}
+\textrm{Use the same command as above, look for encapsulation and authentication.\\ Use the debug command to find further errors.}\\
+\# debug ppp authentication\vspace{11pt}\\
+\textrm{Disbale all debugging with}\\
+\# undebug all
+\subsubsection*{Some other shit}
+\textrm{Find users}\\
+\# show run | include user\vspace{11pt}\\
+show interfaces\\
+show interfaces serial\\
+show ppp multilink

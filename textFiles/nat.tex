@@ -1,0 +1,45 @@
+\section{NAT - Network Address Translation}
+\subsection{Static NAT}
+(config)\# \textbf{ip nat inside source static} \textit{local\_ip global\_ip}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat inside}\\
+(config-if)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat outside}
+\subsection{Dynamic NAT}
+\textrm{Define a pool of global addresses to be used for translation.}\\
+(config)\# \textbf{ip nat pool} \textit{name start\_ip end\_ip} \{\textbf{netmask} \textit{netmask} | \\\textbf{prefix-length} \textit{prefix\_lenght}\}\vspace{11pt}\\
+\textrm{Configure a standard access list permitting the addresses that should be translated.}\\
+(config)\# \textbf{access-list} \textit{access\_list\_number} \textbf{permit} \textit{source} [\textit{source\_\\wildcard}]\vspace{11pt}\\
+\textrm{Establish dynamic source translation, specifying the access list and pool defined in prior steps.}\\
+(config)\# \textbf{ip nat inside source list} \textit{access\_list\_number} \textbf{pool} \textit{name}\vspace{11pt}\\
+\textrm{Identify the inside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat inside}\vspace{11pt}\\
+\textrm{Identify the outside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat outside}
+\subsection{PAT - Port Address Translation}
+\subsubsection*{Configure PAT for a sinlge public IPv4 address}
+\textrm{Define a standard access list permitting the addresses that should be translated.}\\
+(config)\# \textbf{access-list} \textit{access\_list\_number} \textbf{permit} \textit{source} [\textit{source\_\\wildcard}]\vspace{11pt}\\
+\textrm{Establish dynamic source translation, specifying the ACL, exit interface and overload options.}\\
+(config)\# \textbf{ip nat inside source list} \textit{access\_list\_number} \textbf{interface} \\\textit{interface\_id} \textbf{overload}\vspace{11pt}\\
+\textrm{Identify the inside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat inside}\vspace{11pt}\\
+\textrm{Identify the outside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat outside}
+\subsubsection*{Configure PAT for a pool of public IPv4 addresses}
+\textrm{Define a pool of global addresses to be used for overload translation.}\\
+(config)\# \textbf{ip nat pool} \textit{name start\_ip end\_ip} \{\textbf{netmask} \textit{netmask} | \\\textbf{prefix-length} \textit{prefix\_length}\}\vspace{11pt}\\
+\textrm{Define a standard access list permitting the addresses that should be translated.}\\
+(config)\# \textbf{access-list} \textit{access-list-number} \textbf{permit} \textit{source} \\{[\textit{source\_wildcard}]}\vspace{11pt}\\
+\textrm{Establish overload translation, specifying the access list and pool defined in prior steps.}\\
+(config)\# \textbf{ip nat inside source list} \textit{access\_list\_number} \textbf{pool} \textit{name} \\\textbf{overload}\vspace{11pt}\\
+\textrm{Identify the inside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat inside}\vspace{11pt}\\
+\textrm{Identify the outside interface.}\\
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip nat outside}

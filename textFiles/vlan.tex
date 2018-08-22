@@ -1,0 +1,135 @@
+\section{VLAN}
+\subsection{Configure more than 1 interface}
+(config)\# interface range \textit{type} \textit{first-number} - \textit{last-number}
+
+\subsection{Create VLAN}
+(config)\# vlan \textit{vlan\_id}\\
+(config-vlan)\# name \textit{vlan\_name}\\
+(config-vlan)\# end/exit
+
+\subsection{Assign Ports to VLANs}
+(config)\# interface \textit{interface\_id}\\
+(config-if)\# switchport mode access\\
+(config-if)\# switchport access vlan \textit{vlan\_id}\\
+(config-if)\# end/exit
+\subsubsection*{Change Port to VLAN 1}
+(config-if)\# no switchport access vlan
+
+\subsection{Delete VLAN}
+(config)\# no vlan \textit{vlan\_id}
+
+\subsection{Trunk Configuration}
+(config)\# inteface \textit{interface\_id}\\
+\sout{(config-if)\# switchport trunk encapsulation dot1q}\footnote{Old Command}\\
+(config-if)\# switchport mode trunk
+\subsubsection*{Specify a Native VLAN Other Than VLAN 1}
+(config-if)\# switchport trunk native vlan \textit{vlan\_id}
+\subsubsection*{Specify VLANs Allowed On The Trunk Link}
+(config-if)\# switchport trunk allowed vlan \textit{vlan\_list}
+
+\subsection{Restting Configured Values on the Trunk Links}
+\subsubsection*{Set Trunk To Allow All VLANs}
+(config)\# inteface \textit{interface\_id}\\
+(config-if)\# no switchport trunk allowed vlan
+\subsubsection*{Reset Native VLAN to Default}
+(config)\# inteface \textit{interface\_id}\\
+(config-if)\# no switchport trunk native vlan
+
+\subsection{To enable trunking from a Cisco switch to a device that does not support DTP (Dynamic Trunking Protocol)}
+(config-if)\# switchport mode trunk\\
+(config-if)\# switchport nonegotiate
+
+\subsection{Private VLAN (PVLAN)}
+\subsubsection*{Enable Protected Port}
+(config-if)\# switchport protected
+\subsubsection*{Disable Protected Port}
+(config-if)\# no switchport protected
+
+\section{Inter VLAN Routing}
+\subsection{Router-on-a-Stick}
+\doublespacing
+\textrm{\sout{Start by enabling Trunking on the switchport connected to the router. Disable DTP.}\\Create a subinterface for a VLAN}\\
+(config)\# interface \textit{interface\_id.subinterface\_id}\\
+\textrm{Assign subinterface to a VLAN}\\
+(config-subif)\# encapsulation dot1q \textit{vlan\_id} [native]\\
+\textrm{Assign IP address range}\\
+(config-subif)\# ip address \textit{ip\_addres subnet\_mask}\\
+\textrm{When all the subinterfaces have been configured, turn on the physical port}\\
+(config)\# interface \textit{interface\_id}\\
+(config-if)\# no shutdown
+
+\section{Switching Security}
+\subsection{DHCP Snooping}
+\textrm{Enable globally}\\
+(config)\# ip dhcp snooping\\
+\textrm{Enable on specific VLAN}\\
+(config)\# ip dhcp vlan \textit{number1}, \textit{number2}\\
+\textrm{Trust a specific interface}\\
+(config)\# interface \textit{type} \textit{interfaceidnumber}\\
+(config-if)\# ip dhcp trust\\
+\textrm{(Optional) Limit the rate at which an attacker can continually send bogus DHCP requests through untrusted ports to the DHCP server}\\
+(config-if)\# ip dhcp snooping limit rate \textit{rate}
+
+\subsection{Port Security}
+\textrm{First we have to convert the port(s) to an access port(s), otherwise we can’t do port security on it}\\
+(config-if)\# switchport mode access\\
+\textrm{Limit the number of mac-addresses on the port – default is 1}\\
+(config-if)\# switchport port-security maximum \textit{number}\\
+\textrm{Set violation type (look at \autoref*{tab:violationtypes}) - default is shutdown}\\
+(config-if)\# switchport port-security violation \{ protect | \\restrict | shutdown \}\\
+\textrm{Turn on sticky mac addresses (dynamically learned and added to the running config)}\\
+(config-if)\# switchport port-security mac-address sticky [\textit{mac-adr}]\\
+\textrm{Lastly turn on port security}\\
+(config-if)\# switchport port-security
+
+\begin{table}[h]
+\tabulinesep=1mm			%Does something with space between rows
+\parindent0pt				%No indentation for the table
+%\ttfamily
+\begin{tabu}{| X | X | X | X | X | X |}
+	\hline
+	Violation Mode & Forwards Traffic & Sends Syslog Message & Displays Error Messages & Increases Violation Counter & Shuts Down Port\\ \hline
+	Protect & No & No & No & No & No \\ \hline
+	Restrict & No & Yes & No & Yes & No \\ \hline
+	Shutdown & No & No & No & Yes & Yes \\
+	\hline
+\end{tabu}
+\caption{Violation Types}
+\label{tab:violationtypes}
+\end{table}
+
+\onehalfspacing
+\section{Show and Verify -- VLAN}
+\subsection{Trunk Configuration}
+\# show interfaces \textit{interface\_id} switchport\\
+\# show interfaces trunk
+
+\subsection{DTP Mode}
+\# show dtp interface \textit{interface\_id}
+
+\subsection{Troubleshooting Trunks}
+\# show interfaces \textit{interface\_id} trunk
+
+\subsection{Missing VLANs}
+\subsubsection*{Is port in correct VLAN}
+\# show vlan\\
+\# show mac address-table
+\subsubsection*{VLAN present in VLAN database}
+\# show vlan\\
+\# show interfaces\\
+\# show interfaces switchport
+
+\subsection{Port Security Settings}
+\# show port-security interface \textit{interface\_id}
+
+\subsection{Secure MAC Addresses}
+\# show port-security address
+
+\subsection{Routing Table}
+\# show ip route\\
+\# show ip route static\\
+\# show ip route \textit{network}\vspace{11pt}\\  
+\# show ipv6 route\\
+\# show ipv6 route static\\
+\# show ipv6 route \textit{network}
+

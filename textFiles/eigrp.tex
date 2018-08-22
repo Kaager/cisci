@@ -1,0 +1,40 @@
+\section{EIGRP}
+\subsection{Protocol Configuration}
+(config)\# \textbf{router eigrp} \textit{asn}\footnote{The \textit{asn} (autonomous system number) argument can be assigned to any 16-bit value between the number 1 and 65,535. All routers within the EIGRP routing domain must use the same autonomous system number.}\vspace{11pt}\\
+\textrm{Set the Router ID}\\
+(config-router)\# \textbf{eigrp router-id} \textit{ipv4\_address}\footnote{The IPv4 address used to indicate the router ID is actually any 32-bit number displayed in dotted-decimal notation, excluding 0.0.0.0 and 255.255.255.255.}\vspace{11pt}\\
+\textrm{Add networks to advertise}\\
+(config-router)\# \textbf{network} \textit{network\_address} [\textit{wildcard\_mask}]\vspace{11pt}\\
+\textrm{Designate passive interfaces}\\
+(config-router)\# \textbf{passive-interface} \{\textit{interface\_id} | \textbf{default\footnote{The \textit{default} keyword sets all interfaces as passive.}}\}\vspace{11pt}\\
+\textrm{Propagate a default static route}\\
+(config-router)\# \textbf{redistribute static}\vspace{11pt}\\
+\textrm{Disable automatic route summarization}\\
+(config-router)\# \textbf{no auto-summary}\vspace{11pt}\\
+\textrm{Configure K values to manipulate metric formula}\\
+(config-router)\# \textbf{metric weights 0} \textit{k1 k2 k3 k4 k5}
+\subsection{Interface Configuration}
+(config)\# \textbf{interface} \textit{interface\_id}\vspace{11pt}\\
+\textrm{Configure the bandwidth parameter}\\
+(config-if)\# \textbf{bandwidth} \textit{kilobits\_bandwidth\_value}\footnote{Default value is 1544 kb/s.}\vspace{11pt}\\
+\textrm{Configure EIGRP Manual Summarization}\footnote{Configure the summary route on all interfaces that send EIGRP packets.}\\
+(config-if)\# \textbf{ip summary-address eigrp} \textit{asn network\_address \\subnet\_mask}\vspace{11pt}\\
+\textrm{Set maximum bandwidth EIGRP can consume}\\
+(config-if)\# \textbf{ip bandwidth-percent eigrp} \textit{asn percentage}\vspace{11pt}\\
+\textrm{Configure hello and hold timers}\\
+(config)\# \textbf{ip hello-interval eigrp} \textit{asn seconds}\\
+(config)\# \textbf{ip hold-time eigrp} \textit{asn seconds}
+\subsection{MD5 Authentication}
+(config)\# \textbf{key chain} \textit{name\_of\_chain}\\
+(config-keychain)\# \textbf{key} \textit{key\_id}\footnote{ The key ID is the number used to identify an authentication key within a keychain. The range of keys is from 0 to 2,147,483,647. It is recommended that the key number be the same on all routers in the configuration.}\\
+(config-keychain-key)\# \textbf{key-string} \textit{key\_string\_text}\footnote{The key string is similar to a password. Routers exchanging authentication keys must be configured using the same key string.}
+\subsubsection*{Enable MD5 on an interface}
+(config)\# \textbf{interface} \textit{interface\_id}\\
+(config-if)\# \textbf{ip authentication mode eigrp} \textit{asn} \textbf{md5}\\
+(config-if)\# \textbf{ip authentication key-chain eigrp} \textit{asn name\_of\_chain}
+\subsection{Troubleshooting}
+show ip eigrp interfaces\\
+show ip eigrp neighbors\\
+show ip eigrp topology\\
+show ip eigrp traffic\\
+clear ip eigrp neighbors

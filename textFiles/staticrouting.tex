@@ -1,0 +1,62 @@
+\section{Static Routing}
+(config)\# ip route \textit{network\_address} \textit{subnet\_mask} \{\textit{ip\_address} | \\\textit{interface\_type} \textit{interface\_number} [\textit{ip\_address}]\} [\textit{distance}] \\{[name \textit{name}]} [permamnent] [tag \textit{tag}]
+
+\subsection{IPv4}
+\subsubsection*{Next-Hop Static Route (Recursive Static Route????)}
+(config)\# ip route \textit{target\_network subnet\_mask next\_hop\_ip\_addr}
+\subsubsection*{Directly Attached/Connected Static Route}
+(config)\# ip route \textit{target\_network subnet\_mask exit\_int}
+\subsubsection*{Fully Specified Static Route}
+(config)\# ip route \textit{target\_network subnet\_mask exit\_int next\_\\hop\_ip\_addr}
+\subsubsection*{Default Static Route}
+(config)\# ip route 0.0.0.0 0.0.0.0 \{\textit{exit\_int} | \textit{next\_hop\_ip}\}\\
+\textrm{\textbf{NOTE:} An IPv4 default static route is commonly referred to as a quad-zero.}
+
+\subsection{IPv6}
+\textrm{\textbf{NOTE:} IPv6 routing must be enabled with} (config)\# ipv6 unicas- routing\vspace{11pt}\\
+(config)\# ipv6 route \textit{ipv6-prefix/prefix-lenght} \{\textit{ipv6-addr} | \\\textit{exit-int}\}
+\subsubsection*{Next-Hop Static Route}
+(config)\# ipv6 route \textit{ipv6-prefix/prefix-lenght} \textit{next-hop-ipv6-addr}
+\subsubsection*{Directly Attached/Connected Static Route}
+(config)\# ipv6 route \textit{ipv6-prefix/prefix-lenght} \textit{exit-int}
+\subsubsection*{Fully Specified Static Route}
+(config)\# ipv6 route \textit{ipv6-prefix/prefix-lenght} \textit{ipv6-addr} \textit{exit-int}
+\subsubsection*{Default Static Route}
+(config)\# ipv6 route ::/0 \{\textit{ipv6-addr} | \textit{exit-int}\}
+
+\subsection{Summary Route IPv4}
+\textrm{First we need to calculate the summary route, which can be done in 3 steps:\\
+\textbf{Step 1:} List the networks in binary format.\\
+\textbf{Step 2:} Count the number of far-left matching bits to determine the mask for the summary route. This is the prefix, or subnet mask for the summarized route i.e.\ /14 or 255.252.0.0\\
+\textbf{Step 3:} Copy the matching bits and add zero-bits to determine the summarized network address.
+}
+\subsubsection*{Example}
+\textrm{\textbf{Step 1:}}\\
+172.20.0.0\qquad 10101100.00010100.00000000.00000000\\
+172.21.0.0\qquad 10101100.00010101.00000000.00000000\\
+172.22.0.0\qquad 10101100.00010110.00000000.00000000\\
+172.23.0.0\qquad 10101100.00010111.00000000.00000000\\
+\textrm{\textbf{Step 2:}}\\
+172.20.0.0\qquad \textcolor{cyan}{10101100.000101}00.00000000.00000000\\
+172.21.0.0\qquad \textcolor{cyan}{10101100.000101}01.00000000.00000000\\
+172.22.0.0\qquad \textcolor{cyan}{10101100.000101}10.00000000.00000000\\
+172.23.0.0\qquad \textcolor{cyan}{10101100.000101}11.00000000.00000000\\
+\textrm{14 matching bits = /14 or 255.252.0.0\\\textbf{Step 3:}}\\
+10101100.000101 \textrm{= matching bits\\Add zero-bits:}\\
+10101100.000101\textcolor{pink}{00.00000000.00000000}\\
+\textrm{\textbf{Answer} = 172.20.0.0\\Enter the summary route as you would a normal static route, with the summary route as the target network:}\\
+(config)\# ip route 172.20.0.0 255.252.0.0 \{\textit{exit-int} | \textit{next-hop}\}
+
+\subsection{Summary Route IPv6}
+\textrm{Summarizing IPv6 networks into a single IPv6 prefix and prefix-length can be done in seven steps:\\
+\textbf{Step 1.} List the network addresses (prefixes) and identify the part where the addresses differ.\\
+\textbf{Step 2.} Expand the IPv6 if it is abbreviated.\\
+\textbf{Step 3.} Convert the differing section from hex to binary.\\
+\textbf{Step 4.} Count the number of far left matching bits to determine the prefix-length for the summary route. \textbf{Note:} The figure shows all networks converted to binary to demonstrate the matching bits; but the summary can also be determined by converting just the lowest and highest network addresses to binary to find the matching bits.\\
+\textbf{Step 5.} Copy the matching bits and then add zero bits to determine the summarized network address (prefix).\\
+\textbf{Step 6.} Convert the binary section back to hex.\\
+\textbf{Step 7.} Append the prefix of the summary route (result of Step 4).
+}
+
+\subsection{Floating Static Route}
+\textrm{This is a default static route that is configured with the \texttt{[distance]} sat higher than 1 (default), with another default static route with a distance of 1. Because the value is greater than 1, the route floats and is not present in the routing table, inless the preferred route fails.}

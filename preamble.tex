@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+
+%%% PACKAGES %%%
+
+%% ## Page Layout ## %%
+\usepackage[a4paper,left=2.8cm,right=2.8cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{marginnote}
+
+%% ## Sprog og tengsætning ## %%
+\usepackage[utf8]{inputenc}					%  Input encoding af tegnsæt, gør det muligt at bruge æøå
+\usepackage[english]{babel}					% Dokumentets sprog
+\usepackage[T1]{fontenc} 					% Output encoding af tegnsæt
+\usepackage{textcomp}						% Obsolete ????
+\usepackage[normalem]{ulem}					% strikethrough with \sout{...}
+
+%% ## Font ## %%
+%%Default, but with more...
+\usepackage{lmodern}
+%% Baskerville, use together with \usepackage[T1]{fontenc}
+%\usepackage{baskervillef}
+%\usepackage[varqu,varl,var0]{inconsolata}
+%\usepackage[scale=.95,type1]{cabin}
+%\usepackage[baskerville,vvarbb]{newtxmath}
+%\usepackage[cal=boondoxo]{mathalfa}
+%% Mera Mono
+%\usepackage[scaled]{beramono}
+%% Courier
+\usepackage{courier}
+\usepackage{weva}								% Some handwriting font
+
+%% ## gib Tables ## %%
+\usepackage{array}
+\usepackage{tabu}
+
+\usepackage{enumitem}
+
+\usepackage{blindtext}							% Dummy text with \blintext, 
+\usepackage{layout}
+
+%% ## something ## %%
+\usepackage{setspace}							% Controls spacing between lines, and gives access to enviroments
+%\singlespacing
+\onehalfspacing
+%\doublespacing
+
+%% ## Gib Colors ## %% 
+\usepackage[dvipsnames,table]{xcolor}			% Define color with this command \definecolor{name}{model}{color-spec} ### With table(colortbl) loaded, we can now change color in tables
+\definecolor{myOrange}{RGB}{253,136,36}
+\definecolor{rammuDark}{RGB}{44,62,80}
+\definecolor{rammuRed}{RGB}{231,76,60}
+\definecolor{rammuBlueD}{RGB}{41,128,185}
+\definecolor{rammuBlueL}{RGB}{52,152,219}
+\definecolor{pink}{RGB}{255,80,255}
+\definecolor{myDarkGrey}{gray}{0.2}
+\definecolor{myGrey}{gray}{0.3}
+\definecolor{myPink}{RGB}{181,0,184}
+\definecolor{myLightBlue}{RGB}{31,144,201}
+\definecolor{anotherOrange}{RGB}{255,140,0}
+
+\usepackage{soul}								% Hightlight text with \hl
+\DeclareRobustCommand{\hlgreen}[1]{{\sethlcolor{green}\hl{#1}}}
+\DeclareRobustCommand{\hlmagenta}[1]{{\sethlcolor{pink}\hl{#1}}}
+
+%% ## Links ## %%
+\usepackage[colorlinks]{hyperref}
+\hypersetup{
+	colorlinks = true,
+	linkcolor = black,
+	citecolor = black,
+	urlcolor = black,
+	}
+
+%% ## Insert Pictures/Graphics
+\usepackage{graphicx}
+
+%% ## Custom shit
+\usepackage{sectsty}							% Makes is possible to change section color
+\sectionfont{\color{anotherOrange}}
+\subsectionfont{\color{myLightBlue}}
+\subsubsectionfont{\color{myPink}}
+
+%\hbadness = 10000 								% Går så vi slipper se på underfull \hbox, burde ikke ændre på måden dokumentet bliver lavet på...
+
+
+

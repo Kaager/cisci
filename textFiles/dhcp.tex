@@ -1,0 +1,31 @@
+\section{DHCP}
+(config)\# \textbf{ip dhcp excluded-address} \textit{low\_address} [\textit{high\_address}]\\
+(config)\# \textbf{ip dhcp pool} \textit{pool\_name}
+\subsubsection*{Required tasks}
+\textrm{Define the address pool.}\\
+(dhcp-config)\# \textbf{network} \textit{network\_address} [\textit{mask} | \textit{/prefix\_lenght}]\vspace{11pt}\\
+\textrm{Define the default router or gateway.}\\
+(dhcp-config)\# \textbf{default-router} \textit{address} [\textit{address2\dots address8}]
+\subsubsection*{Optional tasks}
+\textrm{Define a DNS server.}\\
+(dhcp-config)\# \textbf{dns-server} \textit{address} [\textit{address2\dots address}]\vspace{11pt}\\
+\textrm{Define the domain name.}\\
+(dhcp-config)\# \textbf{domain-name} \textit{domain}\vspace{11pt}\\
+\textrm{Define the duration of the DHCP lease.}\\
+(dhcp-config)\# \textbf{lease} \{\textit{days} [\textit{hours}] [\textit{minutes}] | \textit{infinite}\}\vspace{11pt}\\
+\textrm{Define the NetBIOS WINS server.}\\
+(dhcp-config)\# \textbf{netbios-name-server}
+\subsection{Other}
+\subsubsection*{DHCP Client}
+(config-if)\# ip address dhcp
+\subsubsection*{DHCP Relay}
+\sout{ip helper-address}\\
+(config)\# ip dhcp relay enable\\
+(config)\# ip dhcp relays server \textit{dhcp\_ip\_address}
+\subsection{Troubleshoot}
+show ip dhcp binding\\
+show ip dhcp server statistics\\
+show ip dhcp conflict\\
+show interfaces interface\\
+show running-config | section dhcp\\
+debug ip dhcp server events

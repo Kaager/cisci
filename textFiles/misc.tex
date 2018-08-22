@@ -1,0 +1,44 @@
+\section{Miscellaneous}
+\subsection{Stop dem Lookups (Disable DNS Lookup)}
+(config)\# no ip domain-lookup
+
+\subsection{If you fucked up}
+\# erase startup-config \\
+\# delete vlan.dat\footnote{If present, check with ``dir flash:''}\\
+\# reload
+
+\subsection{Disable CPD (Cisco Descovery Protocol)}
+(config)\# no cdp run
+
+\subsection{Logging Synchronous}
+(config)\# line console 0 \\
+(config-line)\# logging synchronous
+
+\subsection{Set Console Time to Never Timeout}
+(config)\# line console 0 \\
+(config-line)\# exec-timeout 0 0\footnote{first 0 is for minutes, second is for seconds}
+
+\section{Backing up and restoring TFTP (Trivial File Transfer Protocol)}
+\# copy running-config/startup-config tftp\\
+Enter IP address of the target server:\\
+Enter desired name for the file:\\
+Press ‘Enter’ to confirm\vspace{11pt}\\
+\# copy tftp running-config/startup-config \\
+Enter the IP address of the host where the configuration file is \\stored:\\
+Enter the name to assign to the configuration file: \\
+Press ‘Enter’ to confirm
+
+\section{Configuring SSH}
+\textrm{The device needs an unique hostname}\\
+(config)\# ip domain-name \textit{name.something}\\
+(config)\# crypto key generate rsa\footnote{Enter desired key length (1024)}\\
+(config)\# ip ssh version 2\\
+(config)\# username \textit{name} secret \textit{secret\_password}\vspace{11pt}\\
+(config)\# ip ssh time-out 60\\
+(config)\# ip ssh authentication-retries 2\vspace{11pt}\\
+(config)\# line vty 0 15\\
+(config-line)\# login local\footnote{Remote login now looks for local user for authentication}\\
+(config-line)\# transport input ssh\footnote{Only able to remote via SSH}
+
+\subsection{Delete RSA key pair and disables SSH server}
+(config)\# crypto key zerosize rsa

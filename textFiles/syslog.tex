@@ -1,0 +1,37 @@
+\section{NTP}
+\textrm{[Optional] Change timezone to CET}\\
+(config)\# \textbf{clock timezone CET +1}\vspace{11pt}\\
+\textrm{Set the time manually}\\
+\# \textbf{clock set} \textit{hh:mm:ss day\_of\_month 3\_letter\_month year}\vspace{11pt}\\
+\textrm{Configure the IOS device to be a NTP server}\\
+(config)\# \textbf{ntp master} \textit{number}\vspace{11pt}\\
+\textrm{Get time from a NTP server}\\
+(config)\# \textbf{ntp server} \textit{ip\_address}
+\section{Syslog}
+\textrm{Make logged events display the data and time associated with them}\\
+(config)\# \textbf{service timestamps log datetime}\vspace{11pt}\\
+\textrm{Configure the destination hostname or IP address of the syslog server}\\
+(config)\# \textbf{logging} \textit{ip\_address}\vspace{11pt}\\
+\textrm{Control the messages that will be sent to the syslog server. Fore example, to limit, the messages to levels 4 and lower (0 to 4), use one of the two equivalent commands:}\\
+(config)\# \textbf{logging trap 4}\\
+(config)\# \textbf{logging trap warning}\vspace{11pt}\\
+\textrm{\textbf{Optional.} This specifies that syslog packets contain the IPv4 or IPv6 address of a specific interface, regardless of which interface the packet uses to exit the router.}\\
+(config)\# \textbf{logging source-interface} \textit{interface\_id}
+\subsection{Verify}
+show logging | include changed state to up\\
+show logging | begin June 12 22:35
+\subsection{Syslog Severity Level}
+\textrm
+{\tabulinesep=1mm
+\parindent0pt
+\begin{tabu}{ | l | l | l | }
+	\multicolumn{1}{l|}{\cellcolor{cyan}Severity Name} & \multicolumn{1}{l}{\cellcolor{cyan}Severity Level}  & \multicolumn{1}{|l}{\cellcolor{cyan}Explanation}\\\hline
+	Emergency & Level 0 & System Unusable\\\hline
+	Alert & Level 1 & Immediate Action Needed\\\hline
+	Critical & Level 2 & Critical Condition\\\hline
+	Error & Level 3 & Error Condition\\\hline
+	Warning & Level 4 & Warning Condition\\\hline
+	Notification & Level 5 & Normal, but Significant Condition\\\hline
+	Information & Level 6 & Information Message\\\hline
+	Debugging & Level 7 & Debugging Message\\\hline
+\end{tabu}}
