@@ -1,6 +1,6 @@
 # Cisci
 
-A collection of cisco ios commands from ccna1-4.
+A collection of cisco ios commands from ccna1-4. You are free to use it, just be aware that it is still a work in progress.
 
 ### Todo
 
