@@ -5,6 +5,9 @@
 (config-if)\# \textbf{ip nat inside}\\
 (config-if)\# \textbf{interface} \textit{interface\_id}\\
 (config-if)\# \textbf{ip nat outside}
+\subsubsection*{Static NAT with TCP port specified}
+\textrm{\textbf{Use a static NAT statement to redirect TCP port 80 traffic from 64.102.139.2(inside global) to 10.10.10.10(inside local):}}\\
+(config)\# ip nat inside source static tcp 10.10.10.10 80 \\64.102.139.2 80
 \subsection{Dynamic NAT}
 \textrm{Define a pool of global addresses to be used for translation.}\\
 (config)\# \textbf{ip nat pool} \textit{name start\_ip end\_ip} \{\textbf{netmask} \textit{netmask} | \\\textbf{prefix-length} \textit{prefix\_lenght}\}\vspace{11pt}\\
@@ -18,9 +21,6 @@
 \textrm{Identify the outside interface.}\\
 (config)\# \textbf{interface} \textit{interface\_id}\\
 (config-if)\# \textbf{ip nat outside}
-\subsubsection*{Static NAT with TCP port specified}
-\textrm{\textbf{Use a static NAT statement to redirect TCP port 80 traffic from 64.102.139.2(inside global) to 10.10.10.10(inside local):}}\\
-(config)\# ip nat inside source static tcp 10.10.10.10 80 \\64.102.139.2 80
 \subsection{PAT - Port Address Translation}
 \subsubsection*{Configure PAT for a sinlge public IPv4 address}
 \textrm{Define a standard access list permitting the addresses that should be translated.}\\
