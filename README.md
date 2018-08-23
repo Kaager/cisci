@@ -5,7 +5,7 @@ A collection of cisco ios commands from ccna1-4. You are free to use it, just be
 ### Todo
 
 - [ ] Make commands look uniform
-- [ ] OSPFv3
+- [x] OSPFv3
 - [x] Make som changes to static nat, include something about udp/tcp
 - [ ] Add spanning-tree
 - [ ] Add etherchannel

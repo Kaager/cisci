@@ -55,3 +55,23 @@ show ip ospf interface brief\\
 show ip ospf interface serial 0/0/1
 
 \subsection{IPv6}
+\textrm{\textbf{Enable IPv6 routing}}\\
+(config)\# ipv6 unicast-routing
+\subsubsection*{Router ID}
+(config)\# \textbf{ipv6 router ospf} \textit{process\_id}\\
+(config-rtr)\# \textbf{router-id} \textit{rid}
+\subsubsection*{Enable OSPFv3 on the interfaces that contain the networks that you want to be part of the OSPF area}
+(config-if)\# \textbf{ipv6 ospf} \textit{process\_id} \textbf{area} \textit{area\_id}
+\subsubsection*{Prevent routing updates to be send across an interface}
+(config)\# \textbf{ipv6 router ospf} \textit{process\_id}\\
+(config-rtr)\# \textbf{passive-interface} \textit{interface\_id}
+\subsubsection*{Propagate the default route}
+(config-rtr)\# \textbf{redistribute static}
+\subsubsection*{Some show commands}
+show ipv6 ospf neighbour\\
+show ipv6 protocols\\
+show ipv6 ospf\\
+show ipv6 ospf interface\\
+show ipv6 ospf interface brief\\
+show ipv6 ospf interface serial 0/0/1\\
+show ipv6 route ospf
