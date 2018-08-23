@@ -81,5 +81,10 @@
 
 %\hbadness = 10000 								% Går så vi slipper se på underfull \hbox, burde ikke ændre på måden dokumentet bliver lavet på...
 
-
+% Changes to way unnumbered footnotes look
+\makeatletter
+\renewcommand*{\@fnsymbol}[1]{\ensuremath{\ifcase#1\or \dagger\or \dagger\or \ddagger\or
+    \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
+    \or \ddagger\ddagger \else\@ctrerr\fi}}
+\makeatother
 
