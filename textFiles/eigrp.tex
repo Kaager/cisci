@@ -38,3 +38,20 @@ show ip eigrp neighbors\\
 show ip eigrp topology\\
 show ip eigrp traffic\\
 clear ip eigrp neighbors
+\subsection{IPv6}
+(config)\# \textbf{ipv6 router eigrp} \textit{asn}\vspace{11pt}\\
+\textrm{Set the router ID using a IPv4-address}\\
+(config-rtr)\# \textbf{eigrp router-id} \textit{router\_id}\vspace{11pt}\\
+\textrm{Activate EIGRP for IPv6}\\
+(config-rtr)\# \textbf{no shutdown}\vspace{11pt}\\
+\textrm{Designate passive interfaces}\\
+(config-rtr)\# \textbf{passive-interface} \{\textit{interface\_id} | \textbf{default}\vspace{11pt}\\
+\textrm{Propagate a default static route}\\
+(config-rtr)\# \textbf{redistribute static}
+\subsubsection*{Activate EIGRP on interfaces}
+(config-if)\# \textbf{ipv6 eigrp} \textit{asn}
+\subsubsection*{Gib info}
+show ipv6 eigrp neighbors\\
+show ipv6 protocols\\
+show ipv6 interface brief\\
+show ipv6 route
